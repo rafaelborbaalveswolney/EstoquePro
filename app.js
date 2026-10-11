@@ -1,70 +1,29 @@
-/*
-    Busca o botão responsável por mostrar
-    o formulário de cadastro.
-*/
-const btnMostrarFormulario =
-    document.getElementById("btnMostrarFormulario");
+// Botão que abre e fecha o formulário de cadastro
+const btnMostrarFormulario = document.getElementById("btnMostrarFormulario");
+
+// Botão utilizado para ativar as notificações
+const btnNotificacoes = document.getElementById("btnNotificacoes");
+
+// Formulário de cadastro
+const formProduto = document.getElementById("formProduto");
+
+// Área onde os produtos serão exibidos
+const listaProdutos = document.getElementById("listaProdutos");
+
+// Mensagem exibida quando não existem produtos
+const mensagemSemProdutos = document.getElementById("mensagemSemProdutos");
+
+// Indicadores do Dashboard
+const totalProdutos = document.getElementById("totalProdutos");
+const totalEstoque = document.getElementById("totalEstoque");
+const estoqueBaixo = document.getElementById("estoqueBaixo");
 
 
-/*
-    Busca o botão responsável por solicitar
-    permissão para notificações.
-*/
-const btnNotificacoes =
-    document.getElementById("btnNotificacoes");
+// Recupera os produtos salvos no LocalStorage
+let produtos = JSON.parse(localStorage.getItem("produtos")) || [];
 
 
-/*
-    Busca o formulário de cadastro.
-*/
-const formProduto =
-    document.getElementById("formProduto");
-
-
-/*
-    Busca a área onde os produtos
-    serão mostrados.
-*/
-const listaProdutos =
-    document.getElementById("listaProdutos");
-
-
-/*
-    Busca a mensagem exibida quando
-    não existem produtos cadastrados.
-*/
-const mensagemSemProdutos =
-    document.getElementById("mensagemSemProdutos");
-
-
-/*
-    Busca os indicadores do Dashboard.
-*/
-const totalProdutos =
-    document.getElementById("totalProdutos");
-
-const totalEstoque =
-    document.getElementById("totalEstoque");
-
-const estoqueBaixo =
-    document.getElementById("estoqueBaixo");
-
-
-/*
-    Busca os produtos armazenados
-    anteriormente no LocalStorage.
-
-    Se não existir nenhum produto,
-    começa com um array vazio.
-*/
-let produtos =
-    JSON.parse(localStorage.getItem("produtos")) || [];
-
-
-/*
-    Mostra ou esconde o formulário
-    de cadastro de produto.
-*/
+// Abre ou fecha o formulário de cadastro
 btnMostrarFormulario.addEventListener("click", function () {
 
     formProduto.classList.toggle("mostrar");
@@ -72,75 +31,46 @@ btnMostrarFormulario.addEventListener("click", function () {
 });
 
 
-/*
-    Evento executado quando o usuário
-    clicar em "Ativar Notificações".
-*/
+// Solicita permissão para enviar notificações
 btnNotificacoes.addEventListener("click", function () {
 
-    /*
-        Primeiro verificamos se o navegador
-        possui suporte a notificações.
-    */
+    // Verifica se o navegador possui suporte
     if (!("Notification" in window)) {
 
         alert("Este navegador não possui suporte a notificações.");
-
         return;
 
     }
 
 
-    /*
-        Solicita ao usuário permissão
-        para utilizar as notificações.
-    */
-    Notification.requestPermission()
+    // Solicita a permissão ao usuário
+    Notification.requestPermission().then(function (permissao) {
 
-        .then(function (permissao) {
+        if (permissao === "granted") {
 
-            /*
-                Verifica se o usuário permitiu.
-            */
-            if (permissao === "granted") {
+            alert("Notificações ativadas com sucesso.");
 
-                alert("Notificações ativadas com sucesso.");
+        } else {
 
-            } else {
+            alert("Permissão para notificações não concedida.");
 
-                /*
-                    Caso a permissão seja negada,
-                    mostramos uma mensagem simples.
-                */
-                alert("Permissão para notificações não concedida.");
+        }
 
-            }
-
-        });
+    });
 
 });
 
 
-/*
-    Evento executado quando o formulário
-    de cadastro for enviado.
-*/
+// Evento executado ao cadastrar um produto
 formProduto.addEventListener("submit", function (event) {
 
-    /*
-        Impede que a página seja recarregada.
-    */
+    // Impede o recarregamento da página
     event.preventDefault();
 
 
-    /*
-        Busca os valores digitados.
-    */
-    const nome =
-        document.getElementById("nome").value;
-
-    const categoria =
-        document.getElementById("categoria").value;
+    // Pega os valores informados no formulário
+    const nome = document.getElementById("nome").value;
+    const categoria = document.getElementById("categoria").value;
 
     const quantidade =
         Number(document.getElementById("quantidade").value);
@@ -152,10 +82,7 @@ formProduto.addEventListener("submit", function (event) {
         Number(document.getElementById("preco").value);
 
 
-    /*
-        Cria o objeto que representa
-        o novo produto.
-    */
+    // Cria o novo produto
     const produto = {
 
         nome: nome,
@@ -167,48 +94,30 @@ formProduto.addEventListener("submit", function (event) {
     };
 
 
-    /*
-        Adiciona o produto no array.
-    */
+    // Adiciona o produto na lista
     produtos.push(produto);
 
 
-    /*
-        Salva no LocalStorage.
-    */
+    // Salva os produtos
     salvarProdutos();
 
 
-    /*
-        Limpa o formulário.
-    */
+    // Limpa o formulário
     formProduto.reset();
 
 
-    /*
-        Esconde o formulário.
-    */
+    // Fecha o formulário
     formProduto.classList.remove("mostrar");
 
 
-    /*
-        Atualiza a listagem.
-    */
+    // Atualiza a tela
     mostrarProdutos();
-
-
-    /*
-        Atualiza o Dashboard.
-    */
     atualizarDashboard();
 
 });
 
 
-/*
-    Função responsável por salvar
-    os produtos no LocalStorage.
-*/
+// Salva os produtos no LocalStorage
 function salvarProdutos() {
 
     localStorage.setItem(
@@ -219,69 +128,43 @@ function salvarProdutos() {
 }
 
 
-/*
-    Função responsável por mostrar
-    todos os produtos cadastrados.
-*/
+// Mostra todos os produtos cadastrados
 function mostrarProdutos() {
 
-    /*
-        Limpa a lista antes
-        de construir novamente.
-    */
+    // Limpa a lista antes de montar novamente
     listaProdutos.innerHTML = "";
 
 
-    /*
-        Verifica se não existem produtos.
-    */
+    // Verifica se existem produtos cadastrados
     if (produtos.length === 0) {
 
         mensagemSemProdutos.style.display = "block";
-
         return;
 
     }
 
 
-    /*
-        Esconde a mensagem porque
-        existem produtos cadastrados.
-    */
+    // Esconde a mensagem de lista vazia
     mensagemSemProdutos.style.display = "none";
 
 
-    /*
-        Percorre todos os produtos.
-    */
+    // Percorre todos os produtos
     produtos.forEach(function (produto, indice) {
 
-        /*
-            Cria um elemento para
-            representar o produto.
-        */
-        const produtoDiv =
-            document.createElement("div");
+        // Cria o card do produto
+        const produtoDiv = document.createElement("div");
 
 
-        /*
-            Adiciona a classe padrão.
-        */
+        // Adiciona a classe principal
         produtoDiv.classList.add("produto");
 
 
-        /*
-            Verifica se o estoque atual
-            está abaixo ou igual ao estoque mínimo.
-        */
+        // Verifica se o produto está com estoque baixo
         const estaComEstoqueBaixo =
             produto.quantidade <= produto.quantidadeMinima;
 
 
-        /*
-            Se estiver com estoque baixo,
-            adiciona a classe de alerta.
-        */
+        // Adiciona o destaque caso esteja com estoque baixo
         if (estaComEstoqueBaixo) {
 
             produtoDiv.classList.add("estoque-baixo");
@@ -289,33 +172,69 @@ function mostrarProdutos() {
         }
 
 
-        /*
-            Monta as informações do produto.
-        */
+        // Monta o conteúdo visual do produto
         produtoDiv.innerHTML = `
-            <h3>${produto.nome}</h3>
 
-            <p>
-                Categoria: ${produto.categoria}
-            </p>
+            <div class="produto-topo">
 
-            <p>
-                Quantidade: ${produto.quantidade}
-            </p>
+                <div>
 
-            <p>
-                Quantidade mínima: ${produto.quantidadeMinima}
-            </p>
+                    <h3>
+                        ${produto.nome}
+                    </h3>
 
-            <p>
-                Preço: R$ ${produto.preco.toFixed(2)}
-            </p>
+                    <p class="produto-categoria">
+                        ${produto.categoria}
+                    </p>
 
-            ${
+                </div>
+
+
+                ${
             estaComEstoqueBaixo
                 ? '<span class="alerta-estoque">Estoque baixo</span>'
                 : ''
         }
+
+            </div>
+
+
+            <div class="produto-dados">
+
+                <div class="produto-info">
+
+                    <span>Estoque</span>
+
+                    <strong>
+                        ${produto.quantidade}
+                    </strong>
+
+                </div>
+
+
+                <div class="produto-info">
+
+                    <span>Mínimo</span>
+
+                    <strong>
+                        ${produto.quantidadeMinima}
+                    </strong>
+
+                </div>
+
+
+                <div class="produto-info">
+
+                    <span>Preço</span>
+
+                    <strong>
+                        R$ ${produto.preco.toFixed(2)}
+                    </strong>
+
+                </div>
+
+            </div>
+
 
             <div class="acoesProduto">
 
@@ -326,6 +245,7 @@ function mostrarProdutos() {
                     Entrada
                 </button>
 
+
                 <button
                     type="button"
                     onclick="saidaEstoque(${indice})"
@@ -334,12 +254,11 @@ function mostrarProdutos() {
                 </button>
 
             </div>
+
         `;
 
 
-        /*
-            Adiciona o produto na página.
-        */
+        // Adiciona o card na tela
         listaProdutos.appendChild(produtoDiv);
 
     });
@@ -347,153 +266,99 @@ function mostrarProdutos() {
 }
 
 
-/*
-    Função responsável por realizar
-    uma entrada no estoque.
-*/
+// Realiza uma entrada no estoque
 function entradaEstoque(indice) {
 
-    /*
-        Solicita a quantidade.
-    */
+    // Solicita a quantidade de entrada
     const quantidadeEntrada =
         Number(prompt("Digite a quantidade de entrada:"));
 
 
-    /*
-        Valida a quantidade.
-    */
+    // Verifica se a quantidade é válida
     if (quantidadeEntrada <= 0) {
 
         alert("Informe uma quantidade válida.");
-
         return;
 
     }
 
 
-    /*
-        Soma a quantidade ao estoque atual.
-    */
+    // Soma a quantidade ao estoque atual
     produtos[indice].quantidade += quantidadeEntrada;
 
 
-    /*
-        Salva a alteração.
-    */
+    // Salva a alteração
     salvarProdutos();
 
 
-    /*
-        Atualiza a página.
-    */
+    // Atualiza a tela
     mostrarProdutos();
-
     atualizarDashboard();
 
 }
 
 
-/*
-    Função responsável por realizar
-    uma saída no estoque.
-*/
+// Realiza uma saída no estoque
 function saidaEstoque(indice) {
 
-    /*
-        Solicita a quantidade de saída.
-    */
+    // Solicita a quantidade de saída
     const quantidadeSaida =
         Number(prompt("Digite a quantidade de saída:"));
 
 
-    /*
-        Valida a quantidade.
-    */
+    // Verifica se a quantidade é válida
     if (quantidadeSaida <= 0) {
 
         alert("Informe uma quantidade válida.");
-
         return;
 
     }
 
 
-    /*
-        Impede que seja retirada uma quantidade
-        maior que o estoque disponível.
-    */
+    // Impede saída maior que o estoque disponível
     if (quantidadeSaida > produtos[indice].quantidade) {
 
         alert("Quantidade maior que o estoque disponível.");
-
         return;
 
     }
 
 
-    /*
-        Guarda a quantidade que existia
-        antes da saída.
-
-        Essa informação será utilizada para
-        verificar se o produto acabou de entrar
-        em situação de estoque baixo.
-    */
+    // Guarda a quantidade antes da saída
     const quantidadeAnterior =
         produtos[indice].quantidade;
 
 
-    /*
-        Retira a quantidade informada.
-    */
+    // Retira a quantidade informada
     produtos[indice].quantidade -= quantidadeSaida;
 
 
-    /*
-        Salva a alteração.
-    */
+    // Salva a alteração
     salvarProdutos();
 
 
-    /*
-        Verifica se o produto entrou
-        em situação de estoque baixo.
-    */
+    // Verifica se o produto acabou de entrar em estoque baixo
     if (
         quantidadeAnterior > produtos[indice].quantidadeMinima &&
         produtos[indice].quantidade <= produtos[indice].quantidadeMinima
     ) {
 
-        /*
-            Chama a função responsável
-            por mostrar a notificação.
-        */
         mostrarNotificacaoEstoqueBaixo(produtos[indice]);
 
     }
 
 
-    /*
-        Atualiza a tela.
-    */
+    // Atualiza a tela
     mostrarProdutos();
-
     atualizarDashboard();
 
 }
 
 
-/*
-    Função responsável por mostrar
-    uma notificação de estoque baixo.
-*/
+// Mostra uma notificação quando o estoque fica baixo
 function mostrarNotificacaoEstoqueBaixo(produto) {
 
-    /*
-        Verifica se o navegador
-        possui suporte a notificações.
-    */
+    // Verifica o suporte a notificações
     if (!("Notification" in window)) {
 
         return;
@@ -501,10 +366,7 @@ function mostrarNotificacaoEstoqueBaixo(produto) {
     }
 
 
-    /*
-        Verifica se o usuário já concedeu
-        permissão para notificações.
-    */
+    // Só envia se o usuário permitiu
     if (Notification.permission !== "granted") {
 
         return;
@@ -512,94 +374,55 @@ function mostrarNotificacaoEstoqueBaixo(produto) {
     }
 
 
-    /*
-        Verifica se existe um Service Worker ativo.
-    */
-    navigator.serviceWorker.ready
+    // Aguarda o Service Worker ficar disponível
+    navigator.serviceWorker.ready.then(function (registro) {
 
-        .then(function (registro) {
+        registro.showNotification(
+            "EstoquePro - Estoque baixo",
+            {
 
-            /*
-                Mostra a notificação utilizando
-                o Service Worker do PWA.
-            */
-            registro.showNotification(
-                "EstoquePro - Estoque baixo",
-                {
+                body:
+                    "Atenção: " +
+                    produto.nome +
+                    " está com apenas " +
+                    produto.quantidade +
+                    " unidade(s) em estoque.",
 
-                    /*
-                        Texto exibido
-                        dentro da notificação.
-                    */
-                    body:
-                        "Atenção: " +
-                        produto.nome +
-                        " está com apenas " +
-                        produto.quantidade +
-                        " unidade(s) em estoque.",
+                icon: "./icons/icon-192.png",
 
+                badge: "./icons/icon-192.png"
 
-                    /*
-                        Ícone principal da notificação.
-                    */
-                    icon: "./icons/icon-192.png",
+            }
+        );
 
-
-                    /*
-                        Ícone menor utilizado
-                        por alguns dispositivos.
-                    */
-                    badge: "./icons/icon-192.png"
-
-                }
-            );
-
-        });
+    });
 
 }
 
 
-/*
-    Atualiza os indicadores
-    exibidos no Dashboard.
-*/
+// Atualiza os números do Dashboard
 function atualizarDashboard() {
 
-    /*
-        Total de produtos cadastrados.
-    */
-    totalProdutos.textContent =
-        produtos.length;
+    // Total de produtos cadastrados
+    totalProdutos.textContent = produtos.length;
 
 
-    /*
-        Variável utilizada para calcular
-        a quantidade total do estoque.
-    */
+    // Quantidade total de itens
     let somaEstoque = 0;
 
 
-    /*
-        Variável utilizada para contar
-        os produtos com estoque baixo.
-    */
+    // Quantidade de produtos com estoque baixo
     let quantidadeEstoqueBaixo = 0;
 
 
-    /*
-        Percorre os produtos.
-    */
+    // Percorre todos os produtos
     produtos.forEach(function (produto) {
 
-        /*
-            Soma as quantidades.
-        */
+        // Soma as quantidades
         somaEstoque += produto.quantidade;
 
 
-        /*
-            Verifica a regra de estoque baixo.
-        */
+        // Verifica estoque baixo
         if (produto.quantidade <= produto.quantidadeMinima) {
 
             quantidadeEstoqueBaixo++;
@@ -609,59 +432,32 @@ function atualizarDashboard() {
     });
 
 
-    /*
-        Atualiza o total de itens.
-    */
-    totalEstoque.textContent =
-        somaEstoque;
+    // Atualiza os indicadores
+    totalEstoque.textContent = somaEstoque;
 
-
-    /*
-        Atualiza o total de produtos
-        com estoque baixo.
-    */
     estoqueBaixo.textContent =
         quantidadeEstoqueBaixo;
 
 }
 
 
-/*
-    Ao abrir a página,
-    mostra os produtos salvos.
-*/
+// Mostra os produtos ao abrir a página
 mostrarProdutos();
 
 
-/*
-    Ao abrir a página,
-    atualiza o Dashboard.
-*/
+// Atualiza o Dashboard ao abrir a página
 atualizarDashboard();
 
 
-/*
-    Verifica se o navegador possui
-    suporte a Service Worker.
-*/
+// Verifica se o navegador suporta Service Worker
 if ("serviceWorker" in navigator) {
 
-    /*
-        Aguarda a página terminar
-        de carregar.
-    */
+    // Registra o Service Worker depois que a página carregar
     window.addEventListener("load", function () {
 
-        /*
-            Registra o Service Worker.
-        */
         navigator.serviceWorker
             .register("./service-worker.js")
 
-            /*
-                Caso funcione,
-                mostra uma mensagem no console.
-            */
             .then(function () {
 
                 console.log(
@@ -670,10 +466,6 @@ if ("serviceWorker" in navigator) {
 
             })
 
-            /*
-                Caso ocorra algum erro,
-                mostra a informação no console.
-            */
             .catch(function (erro) {
 
                 console.log(
