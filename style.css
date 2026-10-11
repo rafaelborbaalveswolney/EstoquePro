@@ -1,4 +1,4 @@
-/* Remove os espaçamentos padrão do navegador */
+/* Remove espaçamentos padrão do navegador */
 * {
     margin: 0;
     padding: 0;
@@ -6,7 +6,7 @@
 }
 
 
-/* Configuração geral da página */
+/* Configuração geral */
 body {
     font-family: Arial, sans-serif;
 
@@ -23,6 +23,7 @@ body {
     color: white;
 
     padding: 20px;
+
     border-radius: 10px;
 
     margin-bottom: 20px;
@@ -37,6 +38,7 @@ body {
 /* Nome do sistema */
 .cabecalho h1 {
     font-size: 28px;
+
     margin-bottom: 4px;
 }
 
@@ -47,7 +49,7 @@ body {
 }
 
 
-/* Botão das notificações */
+/* Botão de notificações */
 .btn-notificacao {
     align-self: flex-start;
 }
@@ -56,13 +58,14 @@ body {
 /* Conteúdo principal */
 main {
     display: flex;
+
     flex-direction: column;
 
     gap: 20px;
 }
 
 
-/* Estilo padrão das seções */
+/* Seções */
 section {
     background-color: white;
 
@@ -72,13 +75,13 @@ section {
 }
 
 
-/* Títulos das seções */
+/* Títulos */
 section h2 {
     margin-bottom: 18px;
 }
 
 
-/* Área dos cards do Dashboard */
+/* Área do Dashboard */
 .dashboard-grid {
     display: grid;
 
@@ -98,7 +101,7 @@ section h2 {
 }
 
 
-/* Texto do indicador */
+/* Texto do card */
 .card-dashboard p {
     font-size: 14px;
 
@@ -106,7 +109,7 @@ section h2 {
 }
 
 
-/* Valor do indicador */
+/* Valor do card */
 .card-dashboard strong {
     font-size: 28px;
 
@@ -114,13 +117,13 @@ section h2 {
 }
 
 
-/* Destaque do card de estoque baixo */
+/* Destaque do estoque baixo */
 .card-alerta {
     border-left: 5px solid #d39e00;
 }
 
 
-/* Cabeçalho da seção de produtos */
+/* Cabeçalho da área de produtos */
 .produtos-cabecalho {
     display: flex;
 
@@ -132,7 +135,7 @@ section h2 {
 }
 
 
-/* Estilo padrão dos botões */
+/* Botões */
 button {
     background-color: #1f4e78;
     color: white;
@@ -149,7 +152,7 @@ button {
 }
 
 
-/* Efeito quando o mouse passa sobre o botão */
+/* Efeito ao passar o mouse */
 button:hover {
     background-color: #163a5c;
 }
@@ -159,10 +162,6 @@ button:hover {
 form {
     display: none;
 
-    flex-direction: column;
-
-    gap: 10px;
-
     background-color: #f8fafc;
 
     padding: 18px;
@@ -170,38 +169,74 @@ form {
     border-radius: 10px;
 
     margin-bottom: 20px;
+
+    gap: 14px;
 }
 
 
 /* Mostra o formulário */
 form.mostrar {
     display: flex;
+
+    flex-direction: column;
 }
 
 
-/* Texto dos campos */
-form label {
+/* Bloco de cada campo */
+.campo-formulario {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+}
+
+
+/* Texto do campo */
+.campo-formulario label {
     font-weight: bold;
 
     font-size: 14px;
+
+    color: #333;
 }
 
 
-/* Campos do formulário */
-form input {
+/* Campo de entrada */
+.campo-formulario input {
     width: 100%;
 
-    padding: 11px;
+    padding: 11px 12px;
 
-    border: 1px solid #ccc;
+    border: 1px solid #cbd5e1;
 
     border-radius: 6px;
 
     font-size: 15px;
+
+    background-color: white;
 }
 
 
-/* Área onde os produtos serão exibidos */
+/* Destaque do campo selecionado */
+.campo-formulario input:focus {
+    outline: none;
+
+    border-color: #1f4e78;
+}
+
+
+/* Botão de salvar */
+.btn-salvar {
+    width: 100%;
+
+    font-weight: bold;
+
+    margin-top: 4px;
+}
+
+
+/* Área onde os produtos aparecem */
 #listaProdutos {
     display: flex;
 
@@ -211,7 +246,7 @@ form input {
 }
 
 
-/* Card principal do produto */
+/* Card do produto */
 .produto {
     background-color: #eef3f7;
 
@@ -229,7 +264,7 @@ form input {
 }
 
 
-/* Parte superior do card */
+/* Parte superior do produto */
 .produto-topo {
     display: flex;
 
@@ -251,7 +286,7 @@ form input {
 }
 
 
-/* Categoria do produto */
+/* Categoria */
 .produto-categoria {
     color: #666;
 
@@ -276,7 +311,7 @@ form input {
 }
 
 
-/* Área com estoque, mínimo e preço */
+/* Área das informações do produto */
 .produto-dados {
     display: grid;
 
@@ -286,7 +321,7 @@ form input {
 }
 
 
-/* Pequenos cards de informações */
+/* Pequeno card de informação */
 .produto-info {
     background-color: white;
 
@@ -316,7 +351,7 @@ form input {
 }
 
 
-/* Área dos botões de Entrada e Saída */
+/* Botões de entrada e saída */
 .acoesProduto {
     display: flex;
 
@@ -326,21 +361,16 @@ form input {
 }
 
 
-/* Mensagem quando não existem produtos */
+/* Mensagem de lista vazia */
 #mensagemSemProdutos {
     color: #555;
 }
 
 
-/*
-   Ajustes para telas maiores.
-
-   A estrutura básica foi criada primeiro
-   para celular, seguindo mobile-first.
-*/
+/* Ajustes para telas maiores */
 @media (min-width: 768px) {
 
-    /* Limita a largura do sistema */
+    /* Limita a largura da página */
     body {
         max-width: 1100px;
 
@@ -358,13 +388,13 @@ form input {
     }
 
 
-    /* Dashboard com três cards */
+    /* Dashboard com três colunas */
     .dashboard-grid {
         grid-template-columns: repeat(3, 1fr);
     }
 
 
-    /* Título e botão de novo produto na mesma linha */
+    /* Título e botão de produto em linha */
     .produtos-cabecalho {
         flex-direction: row;
 
@@ -374,13 +404,35 @@ form input {
     }
 
 
-    /* Remove a margem extra do título */
+    /* Remove margem extra do título */
     .produtos-cabecalho h2 {
         margin-bottom: 0;
     }
 
 
-    /* Informações do produto em três colunas */
+    /* Formulário em duas colunas */
+    form.mostrar {
+        display: grid;
+
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 14px;
+    }
+
+
+    /* Preço ocupa a largura inteira */
+    .campo-preco {
+        grid-column: 1 / -1;
+    }
+
+
+    /* Botão também ocupa a largura inteira */
+    .btn-salvar {
+        grid-column: 1 / -1;
+    }
+
+
+    /* Dados do produto em três colunas */
     .produto-dados {
         grid-template-columns: repeat(3, 1fr);
     }

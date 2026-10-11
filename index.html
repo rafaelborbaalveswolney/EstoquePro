@@ -38,7 +38,7 @@
         <p>Controle de Estoque</p>
     </div>
 
-    <!-- Ativa as notificações do navegador -->
+    <!-- Ativa as notificações -->
     <button
             type="button"
             id="btnNotificacoes"
@@ -59,12 +59,10 @@
 
         <h2>Dashboard</h2>
 
-
-        <!-- Área dos indicadores -->
         <div class="dashboard-grid">
 
 
-            <!-- Total de produtos cadastrados -->
+            <!-- Total de produtos -->
             <article class="card-dashboard">
 
                 <p>Total de Produtos</p>
@@ -76,7 +74,7 @@
             </article>
 
 
-            <!-- Quantidade total de itens -->
+            <!-- Total em estoque -->
             <article class="card-dashboard">
 
                 <p>Total em Estoque</p>
@@ -88,7 +86,7 @@
             </article>
 
 
-            <!-- Produtos abaixo do estoque mínimo -->
+            <!-- Estoque baixo -->
             <article class="card-dashboard card-alerta">
 
                 <p>Estoque Baixo</p>
@@ -105,16 +103,16 @@
     </section>
 
 
-    <!-- Produtos -->
+    <!-- Área de produtos -->
     <section class="produtos-section">
 
 
-        <!-- Cabeçalho da área de produtos -->
+        <!-- Cabeçalho da seção -->
         <div class="produtos-cabecalho">
 
             <h2>Produtos</h2>
 
-            <!-- Abre o formulário de cadastro -->
+            <!-- Abre o formulário -->
             <button
                     type="button"
                     id="btnMostrarFormulario"
@@ -128,77 +126,101 @@
         <!-- Formulário de cadastro -->
         <form id="formProduto">
 
-            <!-- Nome -->
-            <label for="nome">
-                Nome do Produto
-            </label>
 
-            <input
-                    type="text"
-                    id="nome"
-                    name="nome"
-                    required
+            <!-- Campo do nome -->
+            <div class="campo-formulario">
+
+                <label for="nome">
+                    Nome do Produto
+                </label>
+
+                <input
+                        type="text"
+                        id="nome"
+                        name="nome"
+                        required
+                >
+
+            </div>
+
+
+            <!-- Campo da categoria -->
+            <div class="campo-formulario">
+
+                <label for="categoria">
+                    Categoria
+                </label>
+
+                <input
+                        type="text"
+                        id="categoria"
+                        name="categoria"
+                        required
+                >
+
+            </div>
+
+
+            <!-- Campo da quantidade -->
+            <div class="campo-formulario">
+
+                <label for="quantidade">
+                    Quantidade
+                </label>
+
+                <input
+                        type="number"
+                        id="quantidade"
+                        name="quantidade"
+                        min="0"
+                        required
+                >
+
+            </div>
+
+
+            <!-- Campo da quantidade mínima -->
+            <div class="campo-formulario">
+
+                <label for="quantidadeMinima">
+                    Quantidade Mínima
+                </label>
+
+                <input
+                        type="number"
+                        id="quantidadeMinima"
+                        name="quantidadeMinima"
+                        min="0"
+                        required
+                >
+
+            </div>
+
+
+            <!-- Campo do preço -->
+            <div class="campo-formulario campo-preco">
+
+                <label for="preco">
+                    Preço
+                </label>
+
+                <input
+                        type="number"
+                        id="preco"
+                        name="preco"
+                        min="0"
+                        step="0.01"
+                        required
+                >
+
+            </div>
+
+
+            <!-- Botão de salvar -->
+            <button
+                    type="submit"
+                    class="btn-salvar"
             >
-
-
-            <!-- Categoria -->
-            <label for="categoria">
-                Categoria
-            </label>
-
-            <input
-                    type="text"
-                    id="categoria"
-                    name="categoria"
-                    required
-            >
-
-
-            <!-- Quantidade atual -->
-            <label for="quantidade">
-                Quantidade
-            </label>
-
-            <input
-                    type="number"
-                    id="quantidade"
-                    name="quantidade"
-                    min="0"
-                    required
-            >
-
-
-            <!-- Quantidade usada para o alerta -->
-            <label for="quantidadeMinima">
-                Quantidade Mínima
-            </label>
-
-            <input
-                    type="number"
-                    id="quantidadeMinima"
-                    name="quantidadeMinima"
-                    min="0"
-                    required
-            >
-
-
-            <!-- Preço unitário -->
-            <label for="preco">
-                Preço
-            </label>
-
-            <input
-                    type="number"
-                    id="preco"
-                    name="preco"
-                    min="0"
-                    step="0.01"
-                    required
-            >
-
-
-            <!-- Salva o novo produto -->
-            <button type="submit">
                 Salvar Produto
             </button>
 
@@ -209,7 +231,7 @@
         <div id="listaProdutos"></div>
 
 
-        <!-- Aparece quando não existem produtos -->
+        <!-- Mensagem quando não há produtos -->
         <p id="mensagemSemProdutos">
             Nenhum produto cadastrado.
         </p>
