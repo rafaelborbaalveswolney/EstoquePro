@@ -181,6 +181,14 @@ function mostrarProdutos() {
                     Saída
                 </button>
 
+                <button
+                    type="button"
+                    class="btn-excluir"
+                    onclick="excluirProduto(${indice})"
+                >
+                    Excluir
+                </button>
+
             </div>
 
         `;
@@ -233,8 +241,7 @@ function saidaEstoque(indice) {
     }
 
 
-    // Guarda a quantidade anterior para identificar
-    // quando o produto entra em estoque baixo
+    // Guarda a quantidade anterior
     const quantidadeAnterior =
         produtos[indice].quantidade;
 
@@ -244,7 +251,7 @@ function saidaEstoque(indice) {
     salvarProdutos();
 
 
-    // Notifica apenas quando o produto entra em estoque baixo
+    // Notifica quando entra em estoque baixo
     if (
         quantidadeAnterior > produtos[indice].quantidadeMinima &&
         produtos[indice].quantidade <= produtos[indice].quantidadeMinima
@@ -260,10 +267,38 @@ function saidaEstoque(indice) {
 }
 
 
+// Exclui um produto
+function excluirProduto(indice) {
+
+    // Pede confirmação antes de excluir
+    const confirmar = confirm(
+        "Deseja realmente excluir o produto " +
+        produtos[indice].nome +
+        "?"
+    );
+
+
+    // Cancela a exclusão
+    if (!confirmar) {
+        return;
+    }
+
+
+    // Remove o produto da lista
+    produtos.splice(indice, 1);
+
+
+    // Salva e atualiza a tela
+    salvarProdutos();
+    atualizarTela();
+
+}
+
+
 // Mostra a notificação de estoque baixo
 function mostrarNotificacaoEstoqueBaixo(produto) {
 
-    // Verifica se a permissão foi concedida
+    // Verifica permissão
     if (
         !("Notification" in window) ||
         Notification.permission !== "granted"
@@ -272,7 +307,7 @@ function mostrarNotificacaoEstoqueBaixo(produto) {
     }
 
 
-    // Usa o Service Worker para mostrar a notificação
+    // Mostra a notificação usando o Service Worker
     navigator.serviceWorker.ready.then(function (registro) {
 
         registro.showNotification(
@@ -319,7 +354,7 @@ function atualizarDashboard() {
     ).length;
 
 
-    // Atualiza os valores na tela
+    // Atualiza os valores
     totalEstoque.textContent = quantidadeTotal;
     estoqueBaixo.textContent = quantidadeEstoqueBaixo;
 

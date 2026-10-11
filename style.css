@@ -135,7 +135,7 @@ section h2 {
 }
 
 
-/* Botões */
+/* Estilo padrão dos botões */
 button {
     background-color: #1f4e78;
     color: white;
@@ -152,7 +152,7 @@ button {
 }
 
 
-/* Efeito ao passar o mouse */
+/* Efeito padrão ao passar o mouse */
 button:hover {
     background-color: #163a5c;
 }
@@ -355,6 +355,8 @@ form.mostrar {
 .acoesProduto {
     display: flex;
 
+    flex-wrap: wrap;
+
     gap: 8px;
 
     margin-top: 14px;
@@ -382,6 +384,18 @@ form.mostrar {
 /* Efeito do botão de Saída */
 .acoesProduto button:nth-child(2):hover {
     background-color: #8e1b1b;
+}
+
+
+/* Botão de excluir produto */
+.btn-excluir {
+    background-color: #6b7280;
+}
+
+
+/* Efeito do botão de excluir */
+.btn-excluir:hover {
+    background-color: #4b5563;
 }
 
 
