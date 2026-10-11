@@ -17,42 +17,74 @@ body {
 }
 
 
-/* Cabeçalho */
+/* Cabeçalho principal */
 .cabecalho {
     background-color: #1f4e78;
     color: white;
 
     padding: 20px;
 
-    border-radius: 10px;
+    border-radius: 14px;
 
     margin-bottom: 20px;
 
     display: flex;
-
     flex-direction: column;
 
-    gap: 16px;
+    gap: 18px;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+
+/* Área da marca */
+.marca {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+}
+
+
+/* Logo do sistema */
+.logo {
+    width: 54px;
+    height: 54px;
+
+    border-radius: 12px;
 }
 
 
 /* Nome do sistema */
-.cabecalho h1 {
-    font-size: 28px;
+.marca-texto h1 {
+    font-size: 30px;
 
     margin-bottom: 4px;
 }
 
 
-/* Subtítulo */
-.cabecalho p {
-    font-size: 16px;
+/* Descrição do sistema */
+.marca-texto p {
+    font-size: 15px;
+
+    opacity: 0.9;
 }
 
 
 /* Botão de notificações */
 .btn-notificacao {
     align-self: flex-start;
+
+    background-color: rgba(255, 255, 255, 0.14);
+
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+
+/* Hover da notificação */
+.btn-notificacao:hover {
+    background-color: rgba(255, 255, 255, 0.22);
 }
 
 
@@ -72,7 +104,9 @@ section {
 
     padding: 20px;
 
-    border-radius: 10px;
+    border-radius: 12px;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 
@@ -145,11 +179,13 @@ button {
 
     padding: 12px 16px;
 
-    border-radius: 6px;
+    border-radius: 7px;
 
     cursor: pointer;
 
     font-size: 15px;
+
+    transition: 0.2s;
 }
 
 
@@ -224,6 +260,8 @@ form.mostrar {
     outline: none;
 
     border-color: #1f4e78;
+
+    box-shadow: 0 0 0 2px rgba(31, 78, 120, 0.08);
 }
 
 
@@ -254,6 +292,16 @@ form.mostrar {
     padding: 18px;
 
     border-radius: 10px;
+
+    transition: 0.2s;
+}
+
+
+/* Leve efeito no card */
+.produto:hover {
+    transform: translateY(-1px);
+
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
 }
 
 
@@ -312,7 +360,7 @@ form.mostrar {
 }
 
 
-/* Dados do produto */
+/* Informações do produto */
 .produto-dados {
     display: grid;
 

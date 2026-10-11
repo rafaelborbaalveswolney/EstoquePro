@@ -10,14 +10,21 @@
     <!-- Informações para SEO -->
     <meta
             name="description"
-            content="EstoquePro - Aplicativo para controle de estoque"
+            content="EstoquePro - Aplicativo para controle e gestão de estoque"
     >
 
     <!-- Cor principal do PWA -->
     <meta name="theme-color" content="#1f4e78">
 
-    <!-- Título da página -->
-    <title>EstoquePro</title>
+    <!-- Título exibido na aba do navegador -->
+    <title>EstoquePro | Controle de Estoque</title>
+
+    <!-- Ícone exibido na aba do navegador -->
+    <link
+            rel="icon"
+            type="image/png"
+            href="icons/icon-192.png"
+    >
 
     <!-- Arquivo de estilos -->
     <link rel="stylesheet" href="style.css">
@@ -30,13 +37,32 @@
 <body>
 
 
-<!-- Cabeçalho do sistema -->
+<!-- Cabeçalho principal -->
 <header class="cabecalho">
 
-    <div>
-        <h1>EstoquePro</h1>
-        <p>Controle de Estoque</p>
+    <!-- Identificação do sistema -->
+    <div class="marca">
+
+        <!-- Ícone do EstoquePro -->
+        <img
+                src="icons/icon-192.png"
+                alt=""
+                class="logo"
+        >
+
+        <!-- Nome e descrição -->
+        <div class="marca-texto">
+
+            <h1>EstoquePro</h1>
+
+            <p>
+                Gestão simples de estoque
+            </p>
+
+        </div>
+
     </div>
+
 
     <!-- Ativa as notificações -->
     <button
@@ -58,6 +84,7 @@
     <section class="dashboard">
 
         <h2>Dashboard</h2>
+
 
         <div class="dashboard-grid">
 
@@ -86,7 +113,7 @@
             </article>
 
 
-            <!-- Estoque baixo -->
+            <!-- Produtos com estoque baixo -->
             <article class="card-dashboard card-alerta">
 
                 <p>Estoque Baixo</p>
@@ -112,6 +139,7 @@
 
             <h2>Produtos</h2>
 
+
             <!-- Abre o formulário -->
             <button
                     type="button"
@@ -123,11 +151,11 @@
         </div>
 
 
-        <!-- Formulário de cadastro -->
+        <!-- Formulário -->
         <form id="formProduto">
 
 
-            <!-- Campo do nome -->
+            <!-- Nome -->
             <div class="campo-formulario">
 
                 <label for="nome">
@@ -144,7 +172,7 @@
             </div>
 
 
-            <!-- Campo da categoria -->
+            <!-- Categoria -->
             <div class="campo-formulario">
 
                 <label for="categoria">
@@ -161,7 +189,7 @@
             </div>
 
 
-            <!-- Campo da quantidade -->
+            <!-- Quantidade -->
             <div class="campo-formulario">
 
                 <label for="quantidade">
@@ -179,7 +207,7 @@
             </div>
 
 
-            <!-- Campo da quantidade mínima -->
+            <!-- Quantidade mínima -->
             <div class="campo-formulario">
 
                 <label for="quantidadeMinima">
@@ -197,7 +225,7 @@
             </div>
 
 
-            <!-- Campo do preço -->
+            <!-- Preço -->
             <div class="campo-formulario campo-preco">
 
                 <label for="preco">
@@ -216,7 +244,7 @@
             </div>
 
 
-            <!-- Botão de salvar -->
+            <!-- Salva ou atualiza o produto -->
             <button
                     type="submit"
                     class="btn-salvar"
@@ -231,7 +259,7 @@
         <div id="listaProdutos"></div>
 
 
-        <!-- Mensagem quando não há produtos -->
+        <!-- Mensagem de lista vazia -->
         <p id="mensagemSemProdutos">
             Nenhum produto cadastrado.
         </p>
@@ -242,7 +270,7 @@
 </main>
 
 
-<!-- Funcionalidades do sistema -->
+<!-- Funcionalidades -->
 <script src="app.js"></script>
 
 </body>
