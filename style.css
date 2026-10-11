@@ -22,7 +22,7 @@ body {
     background-color: #1f4e78;
     color: white;
 
-    padding: 20px;
+    padding: 16px;
 
     border-radius: 14px;
 
@@ -31,7 +31,7 @@ body {
     display: flex;
     flex-direction: column;
 
-    gap: 18px;
+    gap: 14px;
 
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
@@ -43,30 +43,30 @@ body {
 
     align-items: center;
 
-    gap: 14px;
+    gap: 12px;
 }
 
 
 /* Logo do sistema */
 .logo {
-    width: 54px;
-    height: 54px;
+    width: 46px;
+    height: 46px;
 
-    border-radius: 12px;
+    border-radius: 10px;
 }
 
 
 /* Nome do sistema */
 .marca-texto h1 {
-    font-size: 30px;
+    font-size: 26px;
 
-    margin-bottom: 4px;
+    margin-bottom: 3px;
 }
 
 
 /* Descrição do sistema */
 .marca-texto p {
-    font-size: 15px;
+    font-size: 14px;
 
     opacity: 0.9;
 }
@@ -74,7 +74,9 @@ body {
 
 /* Botão de notificações */
 .btn-notificacao {
-    align-self: flex-start;
+    width: 100%;
+
+    align-self: stretch;
 
     background-color: rgba(255, 255, 255, 0.14);
 
@@ -477,13 +479,44 @@ form.mostrar {
     }
 
 
-    /* Cabeçalho em linha */
+    /* Cabeçalho maior no desktop */
     .cabecalho {
+        padding: 20px;
+
         flex-direction: row;
 
         justify-content: space-between;
 
         align-items: center;
+    }
+
+
+    /* Logo maior no desktop */
+    .logo {
+        width: 54px;
+        height: 54px;
+
+        border-radius: 12px;
+    }
+
+
+    /* Nome maior no desktop */
+    .marca-texto h1 {
+        font-size: 30px;
+    }
+
+
+    /* Subtítulo maior no desktop */
+    .marca-texto p {
+        font-size: 15px;
+    }
+
+
+    /* Botão volta ao tamanho normal */
+    .btn-notificacao {
+        width: auto;
+
+        align-self: auto;
     }
 
 
