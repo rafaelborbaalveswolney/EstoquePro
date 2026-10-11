@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<!--
+    Define o idioma principal da página como português do Brasil.
+    Isso também ajuda na acessibilidade e no SEO.
+-->
+<html lang="pt-BR">
+
+<head>
+
+    <!--
+        Define a codificação de caracteres como UTF-8.
+        Permite utilizar acentos e caracteres especiais.
+    -->
+    <meta charset="UTF-8">
+
+
+    <!--
+        Faz a aplicação se adaptar corretamente
+        em celulares, tablets e computadores.
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <!--
+        Descrição utilizada pelos mecanismos de busca
+        e considerada pelo Lighthouse na análise de SEO.
+    -->
+    <meta
+            name="description"
+            content="EstoquePro - Sistema simples para controle de estoque"
+    >
+
+
+    <!--
+        Define a cor principal utilizada
+        pelo navegador e pelo PWA.
+    -->
+    <meta name="theme-color" content="#1f4e78">
+
+
+    <!-- Título exibido na aba do navegador -->
+    <title>EstoquePro</title>
+
+
+    <!--
+        Importa o arquivo responsável
+        pelos estilos da aplicação.
+    -->
+    <link rel="stylesheet" href="style.css">
+
+
+    <!--
+        Liga a página ao manifest.json.
+
+        O manifest possui as configurações
+        necessárias para o PWA.
+    -->
+    <link rel="manifest" href="manifest.json">
+
+</head>
+
+
+<body>
+
+<!--
+    Cabeçalho principal da aplicação.
+-->
+<header>
+
+    <!-- Nome do aplicativo -->
+    <h1>EstoquePro</h1>
+
+    <!-- Descrição do aplicativo -->
+    <p>Controle de Estoque</p>
+
+</header>
+
+
+<!-- Conteúdo principal -->
+<main>
+
+
+    <!--
+        Seção responsável pelo Dashboard.
+    -->
+    <section>
+
+        <!-- Título da seção -->
+        <h2>Dashboard</h2>
+
+
+        <!--
+            Card que mostra quantos
+            produtos estão cadastrados.
+        -->
+        <div>
+
+            <p>Total de Produtos</p>
+
+            <strong id="totalProdutos">0</strong>
+
+        </div>
+
+
+        <!--
+            Card que mostra a soma
+            das quantidades em estoque.
+        -->
+        <div>
+
+            <p>Total em Estoque</p>
+
+            <strong id="totalEstoque">0</strong>
+
+        </div>
+
+
+        <!--
+            Card que mostra quantos produtos
+            estão com estoque baixo.
+        -->
+        <div>
+
+            <p>Estoque Baixo</p>
+
+            <strong id="estoqueBaixo">0</strong>
+
+        </div>
+
+
+        <!--
+            Botão responsável por solicitar
+            permissão para enviar notificações.
+
+            A permissão é solicitada somente
+            quando o usuário clicar no botão.
+        -->
+        <button
+                type="button"
+                id="btnNotificacoes"
+        >
+            Ativar Notificações
+        </button>
+
+    </section>
+
+
+    <!--
+        Seção responsável pelo cadastro
+        e pela listagem de produtos.
+    -->
+    <section>
+
+        <!-- Título da seção -->
+        <h2>Produtos</h2>
+
+
+        <!--
+            Botão responsável por mostrar
+            ou esconder o formulário.
+        -->
+        <button
+                type="button"
+                id="btnMostrarFormulario"
+        >
+            Cadastrar Produto
+        </button>
+
+
+        <!--
+            Formulário utilizado
+            para cadastrar novos produtos.
+        -->
+        <form id="formProduto">
+
+
+            <!-- Campo para o nome do produto -->
+            <label for="nome">
+                Nome do Produto
+            </label>
+
+            <input
+                    type="text"
+                    id="nome"
+                    name="nome"
+                    required
+            >
+
+
+            <!-- Campo para a categoria -->
+            <label for="categoria">
+                Categoria
+            </label>
+
+            <input
+                    type="text"
+                    id="categoria"
+                    name="categoria"
+                    required
+            >
+
+
+            <!-- Campo para a quantidade inicial -->
+            <label for="quantidade">
+                Quantidade
+            </label>
+
+            <input
+                    type="number"
+                    id="quantidade"
+                    name="quantidade"
+                    min="0"
+                    required
+            >
+
+
+            <!--
+                Campo utilizado para definir
+                quando o produto estará com estoque baixo.
+            -->
+            <label for="quantidadeMinima">
+                Quantidade Mínima
+            </label>
+
+            <input
+                    type="number"
+                    id="quantidadeMinima"
+                    name="quantidadeMinima"
+                    min="0"
+                    required
+            >
+
+
+            <!-- Campo para o preço -->
+            <label for="preco">
+                Preço
+            </label>
+
+            <input
+                    type="number"
+                    id="preco"
+                    name="preco"
+                    min="0"
+                    step="0.01"
+                    required
+            >
+
+
+            <!-- Botão que salva o produto -->
+            <button type="submit">
+                Salvar Produto
+            </button>
+
+        </form>
+
+
+        <!--
+            Área onde os produtos serão
+            adicionados pelo JavaScript.
+        -->
+        <div id="listaProdutos"></div>
+
+
+        <!--
+            Mensagem mostrada quando
+            não existem produtos cadastrados.
+        -->
+        <p id="mensagemSemProdutos">
+            Nenhum produto cadastrado.
+        </p>
+
+    </section>
+
+</main>
+
+
+<!--
+    Importa o JavaScript responsável
+    pelas funcionalidades da aplicação.
+-->
+<script src="app.js"></script>
+
+</body>
+
+</html>

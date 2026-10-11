@@ -1,0 +1,9 @@
+# Pasta de configuração do IntelliJ
+.idea/
+
+# Arquivos de módulo do IntelliJ
+*.iml
+
+# Arquivos temporários do sistema
+.DS_Store
+Thumbs.db
