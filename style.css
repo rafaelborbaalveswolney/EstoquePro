@@ -351,13 +351,37 @@ form.mostrar {
 }
 
 
-/* Botões de entrada e saída */
+/* Área dos botões de movimentação */
 .acoesProduto {
     display: flex;
 
     gap: 8px;
 
     margin-top: 14px;
+}
+
+
+/* Botão de Entrada */
+.acoesProduto button:first-child {
+    background-color: #2e7d32;
+}
+
+
+/* Efeito do botão de Entrada */
+.acoesProduto button:first-child:hover {
+    background-color: #1f5f24;
+}
+
+
+/* Botão de Saída */
+.acoesProduto button:nth-child(2) {
+    background-color: #c62828;
+}
+
+
+/* Efeito do botão de Saída */
+.acoesProduto button:nth-child(2):hover {
+    background-color: #8e1b1b;
 }
 
 
