@@ -24,14 +24,28 @@
     {
       "name": "Cadastrar Produto",
       "short_name": "Cadastrar",
-      "description": "Abrir o EstoquePro para cadastrar um novo produto.",
-      "url": "./index.html"
+      "description": "Abrir diretamente o cadastro de um novo produto.",
+      "url": "./index.html?acao=cadastrar",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
     },
     {
       "name": "Ver Estoque",
       "short_name": "Estoque",
-      "description": "Abrir o controle de estoque.",
-      "url": "./index.html"
+      "description": "Abrir diretamente a lista de produtos.",
+      "url": "./index.html?acao=estoque",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
     }
   ]
 }

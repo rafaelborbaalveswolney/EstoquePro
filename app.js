@@ -24,7 +24,7 @@ const totalEstoque = document.getElementById("totalEstoque");
 const estoqueBaixo = document.getElementById("estoqueBaixo");
 
 
-// Recupera os produtos salvos
+// Recupera os produtos salvos no LocalStorage
 let produtos = JSON.parse(localStorage.getItem("produtos")) || [];
 
 
@@ -41,7 +41,9 @@ btnMostrarFormulario.addEventListener("click", function () {
     // Se o formulário for fechado,
     // volta para o modo de cadastro
     if (!formProduto.classList.contains("mostrar")) {
+
         cancelarEdicao();
+
     }
 
 });
@@ -50,20 +52,27 @@ btnMostrarFormulario.addEventListener("click", function () {
 // Ativa as notificações
 btnNotificacoes.addEventListener("click", function () {
 
-    // Verifica suporte do navegador
+    // Verifica se o navegador possui suporte
     if (!("Notification" in window)) {
+
         alert("Este navegador não possui suporte a notificações.");
+
         return;
+
     }
 
 
-    // Solicita permissão
+    // Solicita permissão ao usuário
     Notification.requestPermission().then(function (permissao) {
 
         if (permissao === "granted") {
+
             alert("Notificações ativadas com sucesso.");
+
         } else {
+
             alert("Permissão para notificações não concedida.");
+
         }
 
     });
@@ -80,11 +89,20 @@ formProduto.addEventListener("submit", function (event) {
 
     // Cria o objeto com os dados do formulário
     const produto = {
+
         nome: campoNome.value,
+
         categoria: campoCategoria.value,
-        quantidade: Number(campoQuantidade.value),
-        quantidadeMinima: Number(campoQuantidadeMinima.value),
-        preco: Number(campoPreco.value)
+
+        quantidade:
+            Number(campoQuantidade.value),
+
+        quantidadeMinima:
+            Number(campoQuantidadeMinima.value),
+
+        preco:
+            Number(campoPreco.value)
+
     };
 
 
@@ -139,6 +157,7 @@ function salvarProdutos() {
 function atualizarTela() {
 
     mostrarProdutos();
+
     atualizarDashboard();
 
 }
@@ -169,19 +188,20 @@ function mostrarProdutos() {
     produtos.forEach(function (produto, indice) {
 
         // Cria o card
-        const produtoDiv = document.createElement("div");
+        const produtoDiv =
+            document.createElement("div");
 
 
         // Classe principal
         produtoDiv.classList.add("produto");
 
 
-        // Verifica estoque baixo
+        // Verifica se o estoque está baixo
         const estaComEstoqueBaixo =
             produto.quantidade <= produto.quantidadeMinima;
 
 
-        // Aplica destaque
+        // Aplica destaque visual
         if (estaComEstoqueBaixo) {
 
             produtoDiv.classList.add("estoque-baixo");
@@ -220,7 +240,9 @@ function mostrarProdutos() {
 
                 <div class="produto-info">
 
-                    <span>Estoque</span>
+                    <span>
+                        Estoque
+                    </span>
 
                     <strong>
                         ${produto.quantidade}
@@ -231,7 +253,9 @@ function mostrarProdutos() {
 
                 <div class="produto-info">
 
-                    <span>Mínimo</span>
+                    <span>
+                        Mínimo
+                    </span>
 
                     <strong>
                         ${produto.quantidadeMinima}
@@ -242,7 +266,9 @@ function mostrarProdutos() {
 
                 <div class="produto-info">
 
-                    <span>Preço</span>
+                    <span>
+                        Preço
+                    </span>
 
                     <strong>
                         R$ ${produto.preco.toFixed(2)}
@@ -304,23 +330,34 @@ function mostrarProdutos() {
 // Abre o produto no formulário para edição
 function editarProduto(indice) {
 
-    const produto = produtos[indice];
+    const produto =
+        produtos[indice];
 
 
-    // Guarda qual produto está sendo editado
+    // Guarda o produto que está sendo editado
     indiceEdicao = indice;
 
 
     // Preenche os campos
-    campoNome.value = produto.nome;
-    campoCategoria.value = produto.categoria;
-    campoQuantidade.value = produto.quantidade;
-    campoQuantidadeMinima.value = produto.quantidadeMinima;
-    campoPreco.value = produto.preco;
+    campoNome.value =
+        produto.nome;
+
+    campoCategoria.value =
+        produto.categoria;
+
+    campoQuantidade.value =
+        produto.quantidade;
+
+    campoQuantidadeMinima.value =
+        produto.quantidadeMinima;
+
+    campoPreco.value =
+        produto.preco;
 
 
     // Altera o texto do botão
-    btnSalvar.textContent = "💾 Atualizar Produto";
+    btnSalvar.textContent =
+        "💾 Atualizar Produto";
 
 
     // Mostra o formulário
@@ -329,7 +366,9 @@ function editarProduto(indice) {
 
     // Leva o usuário até o formulário
     formProduto.scrollIntoView({
+
         behavior: "smooth"
+
     });
 
 }
@@ -338,15 +377,16 @@ function editarProduto(indice) {
 // Cancela o modo de edição
 function cancelarEdicao() {
 
-    // Remove o índice
+    // Remove o índice da edição
     indiceEdicao = null;
 
 
-    // Volta o texto do botão
-    btnSalvar.textContent = "💾 Salvar Produto";
+    // Volta o botão para o cadastro normal
+    btnSalvar.textContent =
+        "💾 Salvar Produto";
 
 
-    // Limpa o formulário
+    // Limpa os campos
     formProduto.reset();
 
 }
@@ -356,10 +396,12 @@ function cancelarEdicao() {
 function entradaEstoque(indice) {
 
     const quantidade =
-        Number(prompt("Digite a quantidade de entrada:"));
+        Number(
+            prompt("Digite a quantidade de entrada:")
+        );
 
 
-    // Validação
+    // Verifica se a quantidade é válida
     if (quantidade <= 0) {
 
         alert("Informe uma quantidade válida.");
@@ -375,6 +417,7 @@ function entradaEstoque(indice) {
 
     // Salva e atualiza
     salvarProdutos();
+
     atualizarTela();
 
 }
@@ -384,10 +427,12 @@ function entradaEstoque(indice) {
 function saidaEstoque(indice) {
 
     const quantidade =
-        Number(prompt("Digite a quantidade de saída:"));
+        Number(
+            prompt("Digite a quantidade de saída:")
+        );
 
 
-    // Validação
+    // Verifica se a quantidade é válida
     if (quantidade <= 0) {
 
         alert("Informe uma quantidade válida.");
@@ -397,7 +442,7 @@ function saidaEstoque(indice) {
     }
 
 
-    // Impede saída maior que o estoque
+    // Impede uma saída maior que o estoque
     if (quantidade > produtos[indice].quantidade) {
 
         alert("Quantidade maior que o estoque disponível.");
@@ -412,7 +457,7 @@ function saidaEstoque(indice) {
         produtos[indice].quantidade;
 
 
-    // Retira do estoque
+    // Retira a quantidade
     produtos[indice].quantidade -= quantidade;
 
 
@@ -420,10 +465,13 @@ function saidaEstoque(indice) {
     salvarProdutos();
 
 
-    // Notifica quando entra em estoque baixo
+    // Verifica se acabou de entrar em estoque baixo
     if (
-        quantidadeAnterior > produtos[indice].quantidadeMinima &&
-        produtos[indice].quantidade <= produtos[indice].quantidadeMinima
+        quantidadeAnterior >
+        produtos[indice].quantidadeMinima
+        &&
+        produtos[indice].quantidade <=
+        produtos[indice].quantidadeMinima
     ) {
 
         mostrarNotificacaoEstoqueBaixo(
@@ -433,7 +481,7 @@ function saidaEstoque(indice) {
     }
 
 
-    // Atualiza
+    // Atualiza a tela
     atualizarTela();
 
 }
@@ -450,7 +498,7 @@ function excluirProduto(indice) {
     );
 
 
-    // Cancela
+    // Cancela a exclusão
     if (!confirmar) {
 
         return;
@@ -464,6 +512,7 @@ function excluirProduto(indice) {
 
     // Salva e atualiza
     salvarProdutos();
+
     atualizarTela();
 
 
@@ -476,9 +525,10 @@ function excluirProduto(indice) {
 // Mostra notificação de estoque baixo
 function mostrarNotificacaoEstoqueBaixo(produto) {
 
-    // Verifica permissão
+    // Verifica suporte e permissão
     if (
-        !("Notification" in window) ||
+        !("Notification" in window)
+        ||
         Notification.permission !== "granted"
     ) {
 
@@ -487,7 +537,7 @@ function mostrarNotificacaoEstoqueBaixo(produto) {
     }
 
 
-    // Usa o Service Worker
+    // Usa o Service Worker para mostrar a notificação
     navigator.serviceWorker.ready.then(function (registro) {
 
         registro.showNotification(
@@ -501,9 +551,11 @@ function mostrarNotificacaoEstoqueBaixo(produto) {
                     produto.quantidade +
                     " unidade(s) em estoque.",
 
-                icon: "./icons/icon-192.png",
+                icon:
+                    "./icons/icon-192.png",
 
-                badge: "./icons/icon-192.png"
+                badge:
+                    "./icons/icon-192.png"
 
             }
         );
@@ -516,12 +568,12 @@ function mostrarNotificacaoEstoqueBaixo(produto) {
 // Atualiza o Dashboard
 function atualizarDashboard() {
 
-    // Total de produtos
+    // Total de produtos cadastrados
     totalProdutos.textContent =
         produtos.length;
 
 
-    // Soma todo o estoque
+    // Soma a quantidade de todos os produtos
     const quantidadeTotal =
         produtos.reduce(
             function (total, produto) {
@@ -533,7 +585,7 @@ function atualizarDashboard() {
         );
 
 
-    // Conta estoque baixo
+    // Conta os produtos com estoque baixo
     const quantidadeEstoqueBaixo =
         produtos.filter(
             function (produto) {
@@ -555,6 +607,64 @@ function atualizarDashboard() {
 }
 
 
+// Verifica se o aplicativo foi aberto por um shortcut
+function verificarShortcut() {
+
+    // Lê os parâmetros presentes na URL
+    const parametros =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    // Recupera a ação do shortcut
+    const acao =
+        parametros.get("acao");
+
+
+    // Shortcut para cadastrar produto
+    if (acao === "cadastrar") {
+
+        // Garante que estamos no modo de cadastro
+        cancelarEdicao();
+
+
+        // Abre o formulário
+        formProduto.classList.add("mostrar");
+
+
+        // Leva o usuário até o formulário
+        formProduto.scrollIntoView({
+
+            behavior: "smooth"
+
+        });
+
+    }
+
+
+    // Shortcut para visualizar o estoque
+    if (acao === "estoque") {
+
+        // Busca a seção de produtos
+        const secaoProdutos =
+            document.querySelector(
+                ".produtos-section"
+            );
+
+
+        // Leva o usuário até os produtos
+        secaoProdutos.scrollIntoView({
+
+            behavior: "smooth"
+
+        });
+
+    }
+
+}
+
+
 // Registra o Service Worker
 function registrarServiceWorker() {
 
@@ -567,35 +677,42 @@ function registrarServiceWorker() {
 
 
     // Registra após o carregamento
-    window.addEventListener("load", function () {
+    window.addEventListener(
+        "load",
+        function () {
 
-        navigator.serviceWorker
-            .register("./service-worker.js")
+            navigator.serviceWorker
+                .register("./service-worker.js")
 
-            .then(function () {
+                .then(function () {
 
-                console.log(
-                    "Service Worker registrado com sucesso."
-                );
+                    console.log(
+                        "Service Worker registrado com sucesso."
+                    );
 
-            })
+                })
 
-            .catch(function (erro) {
+                .catch(function (erro) {
 
-                console.log(
-                    "Erro ao registrar o Service Worker:",
-                    erro
-                );
+                    console.log(
+                        "Erro ao registrar o Service Worker:",
+                        erro
+                    );
 
-            });
+                });
 
-    });
+        }
+    );
 
 }
 
 
-// Carrega os dados
+// Carrega os produtos e o Dashboard
 atualizarTela();
+
+
+// Verifica se o aplicativo foi aberto por um shortcut
+verificarShortcut();
 
 
 // Registra o Service Worker
