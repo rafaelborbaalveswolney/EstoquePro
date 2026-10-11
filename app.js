@@ -6,6 +6,18 @@ const listaProdutos = document.getElementById("listaProdutos");
 const mensagemSemProdutos = document.getElementById("mensagemSemProdutos");
 
 
+// Campos do formulário
+const campoNome = document.getElementById("nome");
+const campoCategoria = document.getElementById("categoria");
+const campoQuantidade = document.getElementById("quantidade");
+const campoQuantidadeMinima = document.getElementById("quantidadeMinima");
+const campoPreco = document.getElementById("preco");
+
+
+// Botão utilizado para salvar ou atualizar
+const btnSalvar = formProduto.querySelector(".btn-salvar");
+
+
 // Indicadores do Dashboard
 const totalProdutos = document.getElementById("totalProdutos");
 const totalEstoque = document.getElementById("totalEstoque");
@@ -16,22 +28,36 @@ const estoqueBaixo = document.getElementById("estoqueBaixo");
 let produtos = JSON.parse(localStorage.getItem("produtos")) || [];
 
 
+// Guarda o índice do produto que está sendo editado
+let indiceEdicao = null;
+
+
 // Abre ou fecha o formulário
 btnMostrarFormulario.addEventListener("click", function () {
+
     formProduto.classList.toggle("mostrar");
+
+
+    // Se o formulário for fechado,
+    // volta para o modo de cadastro
+    if (!formProduto.classList.contains("mostrar")) {
+        cancelarEdicao();
+    }
+
 });
 
 
 // Ativa as notificações
 btnNotificacoes.addEventListener("click", function () {
 
-    // Verifica se o navegador suporta notificações
+    // Verifica suporte do navegador
     if (!("Notification" in window)) {
         alert("Este navegador não possui suporte a notificações.");
         return;
     }
 
-    // Solicita permissão ao usuário
+
+    // Solicita permissão
     Notification.requestPermission().then(function (permissao) {
 
         if (permissao === "granted") {
@@ -45,31 +71,55 @@ btnNotificacoes.addEventListener("click", function () {
 });
 
 
-// Cadastra um novo produto
+// Salva ou atualiza um produto
 formProduto.addEventListener("submit", function (event) {
 
     // Impede o recarregamento da página
     event.preventDefault();
 
-    // Cria o produto com os valores do formulário
+
+    // Cria o objeto com os dados do formulário
     const produto = {
-        nome: document.getElementById("nome").value,
-        categoria: document.getElementById("categoria").value,
-        quantidade: Number(document.getElementById("quantidade").value),
-        quantidadeMinima: Number(document.getElementById("quantidadeMinima").value),
-        preco: Number(document.getElementById("preco").value)
+        nome: campoNome.value,
+        categoria: campoCategoria.value,
+        quantidade: Number(campoQuantidade.value),
+        quantidadeMinima: Number(campoQuantidadeMinima.value),
+        preco: Number(campoPreco.value)
     };
 
-    // Adiciona o produto
-    produtos.push(produto);
 
-    // Salva e atualiza a tela
+    // Verifica se estamos cadastrando ou editando
+    if (indiceEdicao === null) {
+
+        // Cadastro de novo produto
+        produtos.push(produto);
+
+    } else {
+
+        // Atualiza o produto existente
+        produtos[indiceEdicao] = produto;
+
+    }
+
+
+    // Salva os dados
     salvarProdutos();
+
+
+    // Atualiza a tela
     atualizarTela();
 
-    // Limpa e fecha o formulário
+
+    // Limpa o formulário
     formProduto.reset();
+
+
+    // Fecha o formulário
     formProduto.classList.remove("mostrar");
+
+
+    // Volta para o modo de cadastro
+    cancelarEdicao();
 
 });
 
@@ -100,41 +150,62 @@ function mostrarProdutos() {
     // Limpa a lista
     listaProdutos.innerHTML = "";
 
+
     // Mostra a mensagem se não houver produtos
     if (produtos.length === 0) {
+
         mensagemSemProdutos.style.display = "block";
+
         return;
+
     }
 
+
+    // Esconde a mensagem
     mensagemSemProdutos.style.display = "none";
 
 
-    // Monta cada card de produto
+    // Monta cada produto
     produtos.forEach(function (produto, indice) {
 
+        // Cria o card
         const produtoDiv = document.createElement("div");
 
+
+        // Classe principal
         produtoDiv.classList.add("produto");
 
+
+        // Verifica estoque baixo
         const estaComEstoqueBaixo =
             produto.quantidade <= produto.quantidadeMinima;
 
 
-        // Aplica o destaque de estoque baixo
+        // Aplica destaque
         if (estaComEstoqueBaixo) {
+
             produtoDiv.classList.add("estoque-baixo");
+
         }
 
 
-        // Conteúdo do card
+        // Conteúdo do produto
         produtoDiv.innerHTML = `
 
             <div class="produto-topo">
 
                 <div>
-                    <h3>${produto.nome}</h3>
-                    <p class="produto-categoria">${produto.categoria}</p>
+
+                    <h3>
+                        ${produto.nome}
+                    </h3>
+
+                    <p class="produto-categoria">
+                        ${produto.categoria}
+                    </p>
+
                 </div>
+
 
                 ${
             estaComEstoqueBaixo
@@ -148,18 +219,35 @@ function mostrarProdutos() {
             <div class="produto-dados">
 
                 <div class="produto-info">
+
                     <span>Estoque</span>
-                    <strong>${produto.quantidade}</strong>
+
+                    <strong>
+                        ${produto.quantidade}
+                    </strong>
+
                 </div>
 
+
                 <div class="produto-info">
+
                     <span>Mínimo</span>
-                    <strong>${produto.quantidadeMinima}</strong>
+
+                    <strong>
+                        ${produto.quantidadeMinima}
+                    </strong>
+
                 </div>
 
+
                 <div class="produto-info">
+
                     <span>Preço</span>
-                    <strong>R$ ${produto.preco.toFixed(2)}</strong>
+
+                    <strong>
+                        R$ ${produto.preco.toFixed(2)}
+                    </strong>
+
                 </div>
 
             </div>
@@ -174,12 +262,23 @@ function mostrarProdutos() {
                     Entrada
                 </button>
 
+
                 <button
                     type="button"
                     onclick="saidaEstoque(${indice})"
                 >
                     Saída
                 </button>
+
+
+                <button
+                    type="button"
+                    class="btn-editar"
+                    onclick="editarProduto(${indice})"
+                >
+                    Editar
+                </button>
+
 
                 <button
                     type="button"
@@ -194,9 +293,61 @@ function mostrarProdutos() {
         `;
 
 
+        // Adiciona o card na tela
         listaProdutos.appendChild(produtoDiv);
 
     });
+
+}
+
+
+// Abre o produto no formulário para edição
+function editarProduto(indice) {
+
+    const produto = produtos[indice];
+
+
+    // Guarda qual produto está sendo editado
+    indiceEdicao = indice;
+
+
+    // Preenche os campos
+    campoNome.value = produto.nome;
+    campoCategoria.value = produto.categoria;
+    campoQuantidade.value = produto.quantidade;
+    campoQuantidadeMinima.value = produto.quantidadeMinima;
+    campoPreco.value = produto.preco;
+
+
+    // Altera o texto do botão
+    btnSalvar.textContent = "Atualizar Produto";
+
+
+    // Mostra o formulário
+    formProduto.classList.add("mostrar");
+
+
+    // Leva o usuário até o formulário
+    formProduto.scrollIntoView({
+        behavior: "smooth"
+    });
+
+}
+
+
+// Cancela o modo de edição
+function cancelarEdicao() {
+
+    // Remove o índice
+    indiceEdicao = null;
+
+
+    // Volta o texto do botão
+    btnSalvar.textContent = "Salvar Produto";
+
+
+    // Limpa o formulário
+    formProduto.reset();
 
 }
 
@@ -208,14 +359,21 @@ function entradaEstoque(indice) {
         Number(prompt("Digite a quantidade de entrada:"));
 
 
+    // Validação
     if (quantidade <= 0) {
+
         alert("Informe uma quantidade válida.");
+
         return;
+
     }
 
 
+    // Soma a quantidade
     produtos[indice].quantidade += quantidade;
 
+
+    // Salva e atualiza
     salvarProdutos();
     atualizarTela();
 
@@ -229,15 +387,23 @@ function saidaEstoque(indice) {
         Number(prompt("Digite a quantidade de saída:"));
 
 
+    // Validação
     if (quantidade <= 0) {
+
         alert("Informe uma quantidade válida.");
+
         return;
+
     }
 
 
+    // Impede saída maior que o estoque
     if (quantidade > produtos[indice].quantidade) {
+
         alert("Quantidade maior que o estoque disponível.");
+
         return;
+
     }
 
 
@@ -246,8 +412,11 @@ function saidaEstoque(indice) {
         produtos[indice].quantidade;
 
 
+    // Retira do estoque
     produtos[indice].quantidade -= quantidade;
 
+
+    // Salva
     salvarProdutos();
 
 
@@ -257,11 +426,14 @@ function saidaEstoque(indice) {
         produtos[indice].quantidade <= produtos[indice].quantidadeMinima
     ) {
 
-        mostrarNotificacaoEstoqueBaixo(produtos[indice]);
+        mostrarNotificacaoEstoqueBaixo(
+            produtos[indice]
+        );
 
     }
 
 
+    // Atualiza
     atualizarTela();
 
 }
@@ -270,7 +442,7 @@ function saidaEstoque(indice) {
 // Exclui um produto
 function excluirProduto(indice) {
 
-    // Pede confirmação antes de excluir
+    // Solicita confirmação
     const confirmar = confirm(
         "Deseja realmente excluir o produto " +
         produtos[indice].nome +
@@ -278,24 +450,30 @@ function excluirProduto(indice) {
     );
 
 
-    // Cancela a exclusão
+    // Cancela
     if (!confirmar) {
+
         return;
+
     }
 
 
-    // Remove o produto da lista
+    // Remove o produto
     produtos.splice(indice, 1);
 
 
-    // Salva e atualiza a tela
+    // Salva e atualiza
     salvarProdutos();
     atualizarTela();
+
+
+    // Sai do modo de edição, caso necessário
+    cancelarEdicao();
 
 }
 
 
-// Mostra a notificação de estoque baixo
+// Mostra notificação de estoque baixo
 function mostrarNotificacaoEstoqueBaixo(produto) {
 
     // Verifica permissão
@@ -303,16 +481,19 @@ function mostrarNotificacaoEstoqueBaixo(produto) {
         !("Notification" in window) ||
         Notification.permission !== "granted"
     ) {
+
         return;
+
     }
 
 
-    // Mostra a notificação usando o Service Worker
+    // Usa o Service Worker
     navigator.serviceWorker.ready.then(function (registro) {
 
         registro.showNotification(
             "EstoquePro - Estoque baixo",
             {
+
                 body:
                     "Atenção: " +
                     produto.nome +
@@ -321,7 +502,9 @@ function mostrarNotificacaoEstoqueBaixo(produto) {
                     " unidade(s) em estoque.",
 
                 icon: "./icons/icon-192.png",
+
                 badge: "./icons/icon-192.png"
+
             }
         );
 
@@ -333,30 +516,41 @@ function mostrarNotificacaoEstoqueBaixo(produto) {
 // Atualiza o Dashboard
 function atualizarDashboard() {
 
-    // Total de produtos cadastrados
-    totalProdutos.textContent = produtos.length;
+    // Total de produtos
+    totalProdutos.textContent =
+        produtos.length;
 
 
-    // Soma a quantidade de todos os produtos
-    const quantidadeTotal = produtos.reduce(
-        function (total, produto) {
-            return total + produto.quantidade;
-        },
-        0
-    );
+    // Soma todo o estoque
+    const quantidadeTotal =
+        produtos.reduce(
+            function (total, produto) {
+
+                return total + produto.quantidade;
+
+            },
+            0
+        );
 
 
-    // Conta os produtos com estoque baixo
-    const quantidadeEstoqueBaixo = produtos.filter(
-        function (produto) {
-            return produto.quantidade <= produto.quantidadeMinima;
-        }
-    ).length;
+    // Conta estoque baixo
+    const quantidadeEstoqueBaixo =
+        produtos.filter(
+            function (produto) {
+
+                return produto.quantidade <=
+                    produto.quantidadeMinima;
+
+            }
+        ).length;
 
 
-    // Atualiza os valores
-    totalEstoque.textContent = quantidadeTotal;
-    estoqueBaixo.textContent = quantidadeEstoqueBaixo;
+    // Atualiza os indicadores
+    totalEstoque.textContent =
+        quantidadeTotal;
+
+    estoqueBaixo.textContent =
+        quantidadeEstoqueBaixo;
 
 }
 
@@ -364,22 +558,35 @@ function atualizarDashboard() {
 // Registra o Service Worker
 function registrarServiceWorker() {
 
+    // Verifica suporte
     if (!("serviceWorker" in navigator)) {
+
         return;
+
     }
 
 
+    // Registra após o carregamento
     window.addEventListener("load", function () {
 
         navigator.serviceWorker
             .register("./service-worker.js")
 
             .then(function () {
-                console.log("Service Worker registrado com sucesso.");
+
+                console.log(
+                    "Service Worker registrado com sucesso."
+                );
+
             })
 
             .catch(function (erro) {
-                console.log("Erro ao registrar o Service Worker:", erro);
+
+                console.log(
+                    "Erro ao registrar o Service Worker:",
+                    erro
+                );
+
             });
 
     });
@@ -387,7 +594,7 @@ function registrarServiceWorker() {
 }
 
 
-// Carrega os dados ao abrir a página
+// Carrega os dados
 atualizarTela();
 
 

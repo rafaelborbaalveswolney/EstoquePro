@@ -1,4 +1,4 @@
-/* Remove espaçamentos padrão do navegador */
+/* Remove espaçamentos padrão */
 * {
     margin: 0;
     padding: 0;
@@ -17,7 +17,7 @@ body {
 }
 
 
-/* Cabeçalho principal */
+/* Cabeçalho */
 .cabecalho {
     background-color: #1f4e78;
     color: white;
@@ -29,6 +29,7 @@ body {
     margin-bottom: 20px;
 
     display: flex;
+
     flex-direction: column;
 
     gap: 16px;
@@ -81,7 +82,7 @@ section h2 {
 }
 
 
-/* Área do Dashboard */
+/* Dashboard */
 .dashboard-grid {
     display: grid;
 
@@ -91,7 +92,7 @@ section h2 {
 }
 
 
-/* Card do Dashboard */
+/* Cards do Dashboard */
 .card-dashboard {
     background-color: #eef3f7;
 
@@ -101,7 +102,7 @@ section h2 {
 }
 
 
-/* Texto do card */
+/* Texto do indicador */
 .card-dashboard p {
     font-size: 14px;
 
@@ -109,7 +110,7 @@ section h2 {
 }
 
 
-/* Valor do card */
+/* Valor do indicador */
 .card-dashboard strong {
     font-size: 28px;
 
@@ -117,13 +118,13 @@ section h2 {
 }
 
 
-/* Destaque do estoque baixo */
+/* Card de estoque baixo */
 .card-alerta {
     border-left: 5px solid #d39e00;
 }
 
 
-/* Cabeçalho da área de produtos */
+/* Cabeçalho dos produtos */
 .produtos-cabecalho {
     display: flex;
 
@@ -135,7 +136,7 @@ section h2 {
 }
 
 
-/* Estilo padrão dos botões */
+/* Botões */
 button {
     background-color: #1f4e78;
     color: white;
@@ -152,13 +153,13 @@ button {
 }
 
 
-/* Efeito padrão ao passar o mouse */
+/* Hover padrão */
 button:hover {
     background-color: #163a5c;
 }
 
 
-/* Formulário começa escondido */
+/* Formulário escondido */
 form {
     display: none;
 
@@ -174,7 +175,7 @@ form {
 }
 
 
-/* Mostra o formulário */
+/* Formulário aberto */
 form.mostrar {
     display: flex;
 
@@ -182,7 +183,7 @@ form.mostrar {
 }
 
 
-/* Bloco de cada campo */
+/* Cada campo */
 .campo-formulario {
     display: flex;
 
@@ -192,7 +193,7 @@ form.mostrar {
 }
 
 
-/* Texto do campo */
+/* Label */
 .campo-formulario label {
     font-weight: bold;
 
@@ -202,7 +203,7 @@ form.mostrar {
 }
 
 
-/* Campo de entrada */
+/* Input */
 .campo-formulario input {
     width: 100%;
 
@@ -218,7 +219,7 @@ form.mostrar {
 }
 
 
-/* Destaque do campo selecionado */
+/* Campo selecionado */
 .campo-formulario input:focus {
     outline: none;
 
@@ -226,7 +227,7 @@ form.mostrar {
 }
 
 
-/* Botão de salvar */
+/* Botão salvar */
 .btn-salvar {
     width: 100%;
 
@@ -236,7 +237,7 @@ form.mostrar {
 }
 
 
-/* Área onde os produtos aparecem */
+/* Lista de produtos */
 #listaProdutos {
     display: flex;
 
@@ -264,7 +265,7 @@ form.mostrar {
 }
 
 
-/* Parte superior do produto */
+/* Topo do produto */
 .produto-topo {
     display: flex;
 
@@ -278,7 +279,7 @@ form.mostrar {
 }
 
 
-/* Nome do produto */
+/* Nome */
 .produto-topo h3 {
     margin-bottom: 4px;
 
@@ -294,7 +295,7 @@ form.mostrar {
 }
 
 
-/* Alerta de estoque baixo */
+/* Alerta */
 .alerta-estoque {
     display: inline-block;
 
@@ -311,7 +312,7 @@ form.mostrar {
 }
 
 
-/* Área das informações do produto */
+/* Dados do produto */
 .produto-dados {
     display: grid;
 
@@ -321,7 +322,7 @@ form.mostrar {
 }
 
 
-/* Pequeno card de informação */
+/* Card interno */
 .produto-info {
     background-color: white;
 
@@ -331,7 +332,7 @@ form.mostrar {
 }
 
 
-/* Nome da informação */
+/* Nome do dado */
 .produto-info span {
     display: block;
 
@@ -343,7 +344,7 @@ form.mostrar {
 }
 
 
-/* Valor da informação */
+/* Valor */
 .produto-info strong {
     color: #1f4e78;
 
@@ -351,7 +352,7 @@ form.mostrar {
 }
 
 
-/* Área dos botões de movimentação */
+/* Área dos botões */
 .acoesProduto {
     display: flex;
 
@@ -363,52 +364,64 @@ form.mostrar {
 }
 
 
-/* Botão de Entrada */
+/* Entrada */
 .acoesProduto button:first-child {
     background-color: #2e7d32;
 }
 
 
-/* Efeito do botão de Entrada */
+/* Hover Entrada */
 .acoesProduto button:first-child:hover {
     background-color: #1f5f24;
 }
 
 
-/* Botão de Saída */
+/* Saída */
 .acoesProduto button:nth-child(2) {
     background-color: #c62828;
 }
 
 
-/* Efeito do botão de Saída */
+/* Hover Saída */
 .acoesProduto button:nth-child(2):hover {
     background-color: #8e1b1b;
 }
 
 
-/* Botão de excluir produto */
+/* Editar */
+.btn-editar {
+    background-color: #e58a00;
+}
+
+
+/* Hover Editar */
+.btn-editar:hover {
+    background-color: #b86e00;
+}
+
+
+/* Excluir */
 .btn-excluir {
     background-color: #6b7280;
 }
 
 
-/* Efeito do botão de excluir */
+/* Hover Excluir */
 .btn-excluir:hover {
     background-color: #4b5563;
 }
 
 
-/* Mensagem de lista vazia */
+/* Lista vazia */
 #mensagemSemProdutos {
     color: #555;
 }
 
 
-/* Ajustes para telas maiores */
+/* Telas maiores */
 @media (min-width: 768px) {
 
-    /* Limita a largura da página */
+    /* Limita a largura */
     body {
         max-width: 1100px;
 
@@ -426,13 +439,13 @@ form.mostrar {
     }
 
 
-    /* Dashboard com três colunas */
+    /* Dashboard em três colunas */
     .dashboard-grid {
         grid-template-columns: repeat(3, 1fr);
     }
 
 
-    /* Título e botão de produto em linha */
+    /* Produtos em linha */
     .produtos-cabecalho {
         flex-direction: row;
 
@@ -442,7 +455,7 @@ form.mostrar {
     }
 
 
-    /* Remove margem extra do título */
+    /* Remove margem do título */
     .produtos-cabecalho h2 {
         margin-bottom: 0;
     }
@@ -458,13 +471,13 @@ form.mostrar {
     }
 
 
-    /* Preço ocupa a largura inteira */
+    /* Preço na largura total */
     .campo-preco {
         grid-column: 1 / -1;
     }
 
 
-    /* Botão também ocupa a largura inteira */
+    /* Botão na largura total */
     .btn-salvar {
         grid-column: 1 / -1;
     }
