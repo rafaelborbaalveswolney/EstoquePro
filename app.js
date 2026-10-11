@@ -209,7 +209,7 @@ function mostrarProdutos() {
 
                 ${
             estaComEstoqueBaixo
-                ? '<span class="alerta-estoque">Estoque baixo</span>'
+                ? '<span class="alerta-estoque">⚠️ Estoque baixo</span>'
                 : ''
         }
 
@@ -259,7 +259,7 @@ function mostrarProdutos() {
                     type="button"
                     onclick="entradaEstoque(${indice})"
                 >
-                    Entrada
+                    📥 Entrada
                 </button>
 
 
@@ -267,7 +267,7 @@ function mostrarProdutos() {
                     type="button"
                     onclick="saidaEstoque(${indice})"
                 >
-                    Saída
+                    📤 Saída
                 </button>
 
 
@@ -276,7 +276,7 @@ function mostrarProdutos() {
                     class="btn-editar"
                     onclick="editarProduto(${indice})"
                 >
-                    Editar
+                    ✏️ Editar
                 </button>
 
 
@@ -285,7 +285,7 @@ function mostrarProdutos() {
                     class="btn-excluir"
                     onclick="excluirProduto(${indice})"
                 >
-                    Excluir
+                    🗑️ Excluir
                 </button>
 
             </div>
@@ -320,7 +320,7 @@ function editarProduto(indice) {
 
 
     // Altera o texto do botão
-    btnSalvar.textContent = "Atualizar Produto";
+    btnSalvar.textContent = "💾 Atualizar Produto";
 
 
     // Mostra o formulário
@@ -343,7 +343,7 @@ function cancelarEdicao() {
 
 
     // Volta o texto do botão
-    btnSalvar.textContent = "Salvar Produto";
+    btnSalvar.textContent = "💾 Salvar Produto";
 
 
     // Limpa o formulário
@@ -467,7 +467,7 @@ function excluirProduto(indice) {
     atualizarTela();
 
 
-    // Sai do modo de edição, caso necessário
+    // Sai do modo de edição
     cancelarEdicao();
 
 }
