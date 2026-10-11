@@ -1,15 +1,13 @@
 /*
-    Nome do cache utilizado pelo EstoquePro.
+    Nome e versão atual do cache.
+
 */
-const CACHE_NAME = "estoquepro-v3";
+const CACHE_NAME = "estoquepro-v4";
 
 
 /*
-    Lista dos arquivos principais
-    que serão armazenados no cache.
-
-    Esses arquivos permitirão que o aplicativo
-    continue funcionando mesmo sem internet.
+    Arquivos principais que serão armazenados
+    para permitir funcionamento offline.
 */
 const arquivosParaCache = [
 
@@ -32,21 +30,21 @@ const arquivosParaCache = [
 self.addEventListener("install", function (event) {
 
     /*
-        Faz o navegador esperar o processo
-        de armazenamento dos arquivos no cache.
+        Faz o navegador esperar até que
+        os arquivos sejam armazenados no cache.
     */
     event.waitUntil(
 
         /*
-            Abre ou cria o cache.
+            Abre ou cria o cache atual.
         */
         caches.open(CACHE_NAME)
 
             .then(function (cache) {
 
                 /*
-                    Adiciona os arquivos principais
-                    dentro do cache.
+                    Adiciona todos os arquivos
+                    principais ao cache.
                 */
                 return cache.addAll(arquivosParaCache);
 
@@ -56,8 +54,8 @@ self.addEventListener("install", function (event) {
 
 
     /*
-        Faz o novo Service Worker
-        ser ativado mais rapidamente.
+        Faz a nova versão do Service Worker
+        avançar para ativação mais rapidamente.
     */
     self.skipWaiting();
 
@@ -87,8 +85,8 @@ self.addEventListener("activate", function (event) {
                     nomesDosCaches.map(function (nomeCache) {
 
                         /*
-                            Se o cache encontrado não for
-                            o cache atual, ele será apagado.
+                            Se o cache encontrado for diferente
+                            da versão atual, ele será removido.
                         */
                         if (nomeCache !== CACHE_NAME) {
 
@@ -115,7 +113,7 @@ self.addEventListener("activate", function (event) {
 
 
 /*
-    Evento executado sempre que o navegador
+    Evento executado sempre que a aplicação
     solicita algum arquivo.
 */
 self.addEventListener("fetch", function (event) {
@@ -123,14 +121,14 @@ self.addEventListener("fetch", function (event) {
     /*
         Verifica se a solicitação é uma navegação.
 
-        Isso acontece, por exemplo,
-        quando abrimos ou atualizamos o index.html.
+        Isso acontece quando abrimos
+        ou atualizamos a página principal.
     */
     if (event.request.mode === "navigate") {
 
         /*
-            Para páginas de navegação,
-            tenta utilizar o index.html salvo no cache.
+            Para navegação, utiliza primeiro
+            o index.html armazenado no cache.
         */
         event.respondWith(
 
@@ -139,8 +137,8 @@ self.addEventListener("fetch", function (event) {
                 .then(function (respostaCache) {
 
                     /*
-                        Se o index.html estiver no cache,
-                        retorna a página salva.
+                        Se encontrou o index.html
+                        no cache, utiliza essa versão.
                     */
                     if (respostaCache) {
 
@@ -150,8 +148,8 @@ self.addEventListener("fetch", function (event) {
 
 
                     /*
-                        Caso não esteja no cache,
-                        tenta buscar pela internet.
+                        Se não encontrou no cache,
+                        tenta buscar normalmente pela rede.
                     */
                     return fetch(event.request);
 
@@ -159,37 +157,41 @@ self.addEventListener("fetch", function (event) {
 
         );
 
+
+        /*
+            Encerra o processamento deste evento.
+        */
         return;
 
     }
 
 
     /*
-        Para os outros arquivos, como CSS,
-        JavaScript, manifest e imagens,
-        procura primeiro no cache.
+        Para os demais arquivos,
+        tenta utilizar primeiro o cache.
     */
     event.respondWith(
 
-        /*
-            ignoreSearch faz o cache ignorar
-            parâmetros extras na URL.
-
-            Isso é importante porque o IntelliJ
-            adiciona parâmetros como ?_ijt=...
-        */
         caches.match(
             event.request,
             {
+
+                /*
+                    Ignora parâmetros extras da URL.
+
+                    Isso é útil durante os testes no IntelliJ,
+                    que pode adicionar parâmetros como ?_ijt=...
+                */
                 ignoreSearch: true
+
             }
         )
 
             .then(function (respostaCache) {
 
                 /*
-                    Se encontrou no cache,
-                    retorna o arquivo salvo.
+                    Se encontrou o arquivo no cache,
+                    retorna a versão armazenada.
                 */
                 if (respostaCache) {
 
@@ -199,8 +201,8 @@ self.addEventListener("fetch", function (event) {
 
 
                 /*
-                    Caso contrário,
-                    tenta acessar normalmente pela rede.
+                    Se o arquivo não estiver no cache,
+                    tenta buscar pela rede.
                 */
                 return fetch(event.request);
 
