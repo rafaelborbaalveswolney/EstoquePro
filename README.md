@@ -2,6 +2,13 @@
 
 Aplicativo web no formato PWA para controle de estoque.
 
+## Integrantes
+
+- Davi Daniel
+- Ismael Vieira
+- Querley Junio
+- Rafael Borba
+
 ## Funcionalidades
 
 - Cadastro de produtos
